@@ -1,0 +1,44 @@
+body{
+    background-color: #e1a7a7;
+}
+
+#check {
+    display: none !important;
+}
+
+.content{
+    display: none;
+}
+
+#check:checked ~ .content{
+    display: block;
+}
+
+
+.description-expand-button {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0 1rem 0;
+    padding: 0.85em 1em;
+    border: 1px solid transparent;
+    border-radius: 0.1875rem;
+    -webkit-transition: background-color 0.25s ease-out, color 0.25s ease-out;
+    transition: background-color 0.25s ease-out, color 0.25s ease-out;
+    font-family: inherit;
+    font-size: 0.9rem;
+    -webkit-appearance: none;
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+    font-size: 1.0625rem;
+    background-color: #fdfdfd;
+    color: #fdfdfd;
+    background-color: var(--brand, #fdfdfd);
+    color: var(--brand-contrast, #00000);
+}
+
+
+.description-expand-button:hover {
+    background-color: #333;
+    color: #fdfdfd; 
+}

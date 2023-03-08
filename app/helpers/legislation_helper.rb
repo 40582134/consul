@@ -27,4 +27,7 @@ module LegislationHelper
       "background: #{@process.background_color};color: #{@process.font_color};"
     end
   end
+  def css_for_process_description 
+    "background: #{@process.background_color};color: #{@process.font_color};"
+  end
 end

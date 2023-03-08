@@ -10,54 +10,65 @@
       <% end %>
       <h2><%= @process.title %></h2>
       <% if header == :small %>
-        <div id="legislation_info" class="is-hidden" data-toggler=".is-hidden">
-          <% if @process.additional_info.present? %>
+        <% if @process.description.present? %>
+          <p class="title"><%= t("legislation.processes.header.description") %></p>
+          <div>
             <hr>
-            <p>kjiaubfhiuw</p>
-            <p class="title"><%= t("legislation.processes.header.additional_info") %></p>
-            <%= markdown @process.additional_info if @process.additional_info %>
-          <% end %>
+            <input type="checkbox" id="check">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Convallis tellus id interdum velit laoreet. Malesuada nunc vel risus commodo viverra maecenas. Lobortis feugiat vivamus at augue eget arcu dictum varius duis. Turpis massa tincidunt dui ut ornare. Vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam erat. Nisl suscipit adipiscing bibendum est ultricies integer quis. Vitae tempus quam pellentesque nec. Odio tempor orci dapibus ultrices in iaculis nunc sed.</p>
+            <%= markdown @process.description %>
+          </div>
+          <label class="description-expand-button centrbtn" for="check">read more</label>
         </div>
-        <button type="button" class="button" data-toggle="legislation_info">
-          <%= t("legislation.processes.header.more_info") %>
-        </button>
-      <% else %>
-        <%= render "legislation/processes/header_full", process: @process %>
       <% end %>
-    </div>
-    <aside class="small-12 medium-3 column">
-      <%= render "shared/social_share",
+      <div id="legislation_info" class="is-hidden" data-toggler=".is-hidden">
+        <% if @process.additional_info.present? %>
+          <hr>
+          <p>kjiaubfhiuw</p>
+          <p class="title"><%= t("legislation.processes.header.additional_info") %></p>
+          <%= markdown @process.additional_info if @process.additional_info %>
+        <% end %>
+      </div>
+      <button type="button" class="button" data-toggle="legislation_info">
+        <%= t("legislation.processes.header.more_info") %>
+      </button>
+    <% else %>
+      <%= render "legislation/processes/header_full", process: @process %>
+    <% end %>
+  </div>
+  <aside class="small-12 medium-3 column">
+    <%= render "shared/social_share",
         share_title: t("proposals.show.share"),
         title: @process.title,
         url: legislation_process_url(@process),
         description: @process.title,
         mobile: @process.title %>
-      <% if @process.image.present? %>
-        <hr>
-        <%= image_tag(@process.image.variant(:large), alt: @process.title, id: "image") %>
-      <% end %>
-      <% if process.draft_publication.enabled? %>
-        <div class="sidebar-divider"></div>
-        <p class="sidebar-title">
-          <%= t("legislation.processes.shared.draft_publication_date") %>
-        </p>
-        <p>
-          <%= link_to draft_publication_legislation_process_path(@process) do %>
-            <strong><%= format_date(process.draft_publication_date) %></strong>
-          <% end %>
-        </p>
-      <% end %>
-      <% if process.result_publication.enabled? %>
-        <div class="sidebar-divider"></div>
-        <p class="sidebar-title">
-          <%= t("legislation.processes.shared.result_publication_date") %>
-        </p>
-        <p>
-          <%= link_to result_publication_legislation_process_path(@process) do %>
-            <strong><%= format_date(process.result_publication_date) %></strong>
-          <% end %>
-        </p>
-      <% end %>
-    </aside>
-  </div>
+    <% if @process.image.present? %>
+      <hr>
+      <%= image_tag(@process.image.variant(:large), alt: @process.title, id: "image") %>
+    <% end %>
+    <% if process.draft_publication.enabled? %>
+      <div class="sidebar-divider"></div>
+      <p class="sidebar-title">
+        <%= t("legislation.processes.shared.draft_publication_date") %>
+      </p>
+      <p>
+        <%= link_to draft_publication_legislation_process_path(@process) do %>
+          <strong><%= format_date(process.draft_publication_date) %></strong>
+        <% end %>
+      </p>
+    <% end %>
+    <% if process.result_publication.enabled? %>
+      <div class="sidebar-divider"></div>
+      <p class="sidebar-title">
+        <%= t("legislation.processes.shared.result_publication_date") %>
+      </p>
+      <p>
+        <%= link_to result_publication_legislation_process_path(@process) do %>
+          <strong><%= format_date(process.result_publication_date) %></strong>
+        <% end %>
+      </p>
+    <% end %>
+  </aside>
+</div>
 </div>

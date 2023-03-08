@@ -1,3 +1,6 @@
+<head>
+  <%= stylesheet_link_tag 'legislation-processes-description'%>
+</head>
 <div class="legislation-hero jumbo" style="<%= css_for_process_header %>">
   <div class="row">
     <div class="small-12 medium-9 column">
@@ -9,19 +12,18 @@
         <%= back_link_to legislation_processes_path %>
       <% end %>
       <h2><%= @process.title %></h2>
+      <% if @process.description.present? %>
+        <p class="title"><%= t("legislation.processes.header.description") %></p>
+        <div>
+          <hr>
+          <input type="checkbox" id="check">
+          <%= markdown @process.description %>
+        </div>
+        <label class="description-expand-button centrbtn" for="check">read more</label>
+      </div>
       <% if header == :small %>
-        <div id="legislation_info" class="is-hidden" data-toggler=".is-hidden">
-          <% if @process.description.present? %>
-            <p class="title"><%= t("legislation.processes.header.description") %></p>
-            <div>
-              <hr>
-              <input type="checkbox" id="check">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Convallis tellus id interdum velit laoreet. Malesuada nunc vel risus commodo viverra maecenas. Lobortis feugiat vivamus at augue eget arcu dictum varius duis. Turpis massa tincidunt dui ut ornare. Vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam erat. Nisl suscipit adipiscing bibendum est ultricies integer quis. Vitae tempus quam pellentesque nec. Odio tempor orci dapibus ultrices in iaculis nunc sed.</p>
-              <%= markdown @process.description %>
-            </div>
-            <label class="description-expand-button centrbtn" for="check">read more</label>
-          </div>
-        <% end %>
+      <% end %>
+      <div id="legislation_info" class="is-hidden" data-toggler=".is-hidden">
         <% if @process.additional_info.present? %>
           <hr>
           <p class="title"><%= t("legislation.processes.header.additional_info") %></p>
