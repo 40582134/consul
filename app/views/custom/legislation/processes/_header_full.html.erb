@@ -1,0 +1,64 @@
+<% if @process.description.present? %>
+  <p class="title"><%= t("legislation.processes.header.description") %></p>
+  <% if @process.description.length > 250 %>
+    <% full_description = markdown(@process.description) %>
+    <span class="description-text"><%= truncate(strip_tags(full_description), length: 250) %></span>
+    <span class="toggle-more" style="cursor: pointer; color: blue;">Read More</span>
+    <span class="more-text" style="display:none;"><%= full_description %></span>
+    <span class="toggle-less" style="cursor: pointer; color: blue; display:none;">Show Less</span>
+  <% else %>
+    <%= markdown(@process.description) %>
+  <% end %>
+<% end %>
+<%= render SDG::TagListComponent.new(@process, linkable: false) %>
+<% if @process.additional_info.present? %>
+  <div id="additional_info" class="is-hidden" data-toggler=".is-hidden">
+    <hr>
+    <p class="title"><%= t("legislation.processes.header.additional_info") %></p>
+    <%= markdown(@process.additional_info) if @process.additional_info %>
+  </div>
+  <hr>
+  <button type="button" class="button" data-toggle="additional_info"
+    <% if banner_color? %>
+      style="background:<%= process.font_color %>; color:<%= process.background_color %>;"
+    <% end %>>
+    <%= t("legislation.processes.header.additional_info") %>
+  </button>
+  <% end %>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var toggleMore = document.querySelectorAll('.toggle-more');
+      for (var i = 0; i < toggleMore.length; i++) {
+        toggleMore[i].addEventListener('click', function(e) {
+          e.preventDefault();
+          var moreText = this.parentElement.querySelector('.more-text');
+          var descriptionText = this.parentElement.querySelector('.description-text');
+          var toggleLess = this.parentElement.querySelector('.toggle-less');
+          if (moreText.style.display === 'none') {
+            moreText.style.display = 'inline';
+            toggleLess.style.display = 'inline';
+            this.style.display = 'none';
+            descriptionText.style.display = 'none';
+          } else {
+            moreText.style.display = 'none';
+            toggleLess.style.display = 'none';
+            this.parentElement.querySelector('.toggle-more').style.display = 'inline';
+            descriptionText.style.display = 'inline';
+          }
+        });
+      }
+
+      var toggleLess = document.querySelectorAll('.toggle-less');
+      for (var i = 0; i < toggleLess.length; i++) {
+        toggleLess[i].addEventListener('click', function(e) {
+          e.preventDefault();
+          var moreText = this.parentElement.querySelector('.more-text');
+          var descriptionText = this.parentElement.querySelector('.description-text');
+          moreText.style.display = 'none';
+          this.style.display = 'none';
+          this.parentElement.querySelector('.toggle-more').style.display = 'inline';
+          descriptionText.style.display = 'inline';
+        });
+      }
+    });
+  </script>
