@@ -1,4 +1,4 @@
-"<%= render "shared/globalize_locales", resource: card %>
+<%= render "shared/globalize_locales", resource: card %>
 <%= translatable_form_for [namespace.to_sym, card.cardable, card], url: local_assigns[:url] do |f| %>
   <%= render "shared/errors", resource: card %>
   <div class="row">
@@ -47,4 +47,4 @@
       ) %>
     </div>
   </div>
-  <!--<% end %>"
+  <!--<% end %>

@@ -1,5 +1,6 @@
 class Widget::Card < ApplicationRecord
   include Imageable
+  has_many :images, dependent: :destroy
   belongs_to :cardable, polymorphic: true
 
   translates :label,       touch: true

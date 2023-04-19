@@ -1,24 +1,61 @@
 <fieldset>
   <legend><%= t("images.form.title") %></legend>
   <p class="help-text"><%= note %></p>
-
-  <div id="nested-image">
+  <div id="nested-image" data-image-count="<%= imageable.images.count %>">
     <%= f.fields_for image_fields do |image_builder| %>
       <%= render Images::FieldsComponent.new(image_builder, imageable: imageable) %>
     <% end %>
   </div>
+  <% if imageable.images.count < 5 %>
+    <%= link_to_add_association t("images.form.add_new_image"), f, image_fields,
+                                force_non_association_create: true,
+                                partial: "images/image_fields",
+                                id: "new_image_link",
+                                class: "button upload-image
+                                        #{"hide" if image_fields == :image && imageable.images.present?}",
+                                render_options: {
+                                  locals: { imageable: imageable }
+                                },
+                                data: {
+                                  association_insertion_node: "#nested-image",
+                                  association_insertion_method: "append"
+                                } %>
+  <% else %>
+    <%= link_to t("images.form.max_images_reached"), "javascript:void(0);", class: "button upload-image disabled" %>
+  <% end %>
+  <script>
+    $(document).ready(function() {
+      var imageCount = <%= imageable.images.count %>;
 
-  <%= link_to_add_association t("images.form.add_new_image"), f, image_fields,
-                              force_non_association_create: true,
-                              partial: "images/image_fields",
-                              id: "new_image_link",
-                              class: "button upload-image
-                                      #{"hide" if image_fields == :image && imageable.image.present?}",
-                              render_options: {
-                                locals: { imageable: imageable }
-                              },
-                              data: {
-                                association_insertion_node: "#nested-image",
-                                association_insertion_method: "append"
-                              } %>
+      // Disable the "Add new image" button if there are already 5 images
+      if (imageCount >= 5) {
+        $('#new_image_link').addClass('disabled').click(function(event) {
+          event.preventDefault();
+        });
+      }
+
+      // Enable the "Add new image" button if an image is selected
+      $('input[type=file]').change(function() {
+        if ($(this).val()) {
+          $('#new_image_link').removeClass('disabled').unbind('click');
+        }
+      });
+
+      // Update the image count when an image is added or removed
+      $('#nested-image').on('cocoon:after-insert cocoon:after-remove', function() {
+        imageCount = $('#nested-image .nested-fields').length;
+        $('#nested-image').attr('data-image-count', imageCount);
+
+        // Disable the "Add new image" button if there are already 5 images
+        if (imageCount >= 5) {
+          $('#new_image_link').addClass('disabled').click(function(event) {
+            event.preventDefault();
+          });
+        }
+        else {
+          $('#new_image_link').removeClass('disabled').unbind('click');
+        }
+      });
+    });
+  </script>
 </fieldset>

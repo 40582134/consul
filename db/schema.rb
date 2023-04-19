@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_06_141152) do
+ActiveRecord::Schema.define(version: 2023_04_18_033614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -678,8 +678,10 @@ ActiveRecord::Schema.define(version: 2023_02_06_141152) do
     t.bigint "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.integer "user_id"
+    t.bigint "widget_card_id"
     t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
     t.index ["user_id"], name: "index_images_on_user_id"
+    t.index ["widget_card_id"], name: "index_images_on_widget_card_id"
   end
 
   create_table "legislation_annotations", id: :serial, force: :cascade do |t|
@@ -1791,6 +1793,7 @@ ActiveRecord::Schema.define(version: 2023_02_06_141152) do
   add_foreign_key "geozones_polls", "polls"
   add_foreign_key "identities", "users"
   add_foreign_key "images", "users"
+  add_foreign_key "images", "widget_cards"
   add_foreign_key "legislation_draft_versions", "legislation_processes"
   add_foreign_key "legislation_proposals", "legislation_processes"
   add_foreign_key "locks", "users"
