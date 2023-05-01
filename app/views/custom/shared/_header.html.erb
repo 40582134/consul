@@ -1,5 +1,10 @@
 <% pics = Dir.entries("public/heros").select{|x| x != '.' && x != '..' } %>
-<div class="budget-h">
+<% video = '<iframe width="560" height="315" src="https://www.youtube.com/embed/Q5YBxupnKHU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'.html_safe %>
+<% if header.image.present? %>
+  <%= image_tag(header.image.variant(:large), class: "jimbo", alt: header.image.title) %>
+<% elsif defined?(video) && video.present? %>
+  <%= video %>
+<% elsif pics.present? %>
   <div class="budget-h">
     <div class="orbit" role="region" aria-label="Cosla Hero Banner" data-orbit data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
       <div class="orbit-wrapper" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
@@ -32,3 +37,4 @@
       </div>
     </div>
   </div>
+<% end %>
