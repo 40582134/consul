@@ -1,5 +1,5 @@
 <% pics = Dir.entries("public/heros").select{|x| x != '.' && x != '..' } %>
-<% video = '<iframe width="560" height="315" src="https://www.youtube.com/embed/Q5YBxupnKHU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'.html_safe %>
+<% video = '<iframe width="560" height="315" src="https://www.youtube.com/embed/EOR4HVTex2k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'.html_safe %>
 <% if header.image.present? %>
   <%= image_tag(header.image.variant(:large), class: "jimbo", alt: header.image.title) %>
 <% elsif defined?(video) && video.present? %>
